@@ -4,10 +4,64 @@
         <title>Long Ass URL</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style type="text/css">
+            td {
+                white-space: nowrap;
+                overflow: auto;
+            }
+        </style>
     </head>
     <body>
         <h1>Long Ass URL.com</h1>
-        
+
         <h2>It's about time</h2>
+        
+        <form id="origUrlForm">
+            <input type="text" id="origUrl" placeholder="https://somesite.com"/>
+            <input type="submit" value="Go --&gt;"/>
+        </form>
+        
+        <table>
+            <tbody id="output">
+            </tbody>
+        </table>
+
+        <script>
+            function makeId(length) {
+                var result = '';
+                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for (var i = 0; i < length; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
+            }
+            
+            document.getElementById("origUrlForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                const origUrl = document.getElementById("origUrl").value;
+                
+                const tr = document.createElement("tr");
+                const tdOrigUrl = document.createElement("td");
+                const tdSeparator = document.createElement("td");
+                const tdNewUrl = document.createElement("td");
+                
+                tdOrigUrl.appendChild(document.createTextNode(origUrl));
+                tdSeparator.appendChild(document.createTextNode("-->"));
+                tdNewUrl.appendChild(document.createTextNode("http://longassurl.com/" + makeId(280)));
+                
+                tr.appendChild(tdOrigUrl);
+                tr.appendChild(tdSeparator);
+                tr.appendChild(tdNewUrl);
+                
+                const output = document.getElementById("output");
+                output.appendChild(tr);
+                
+                // Clean up
+                document.getElementById("origUrl").value = "";
+            });
+        </script>
     </body>
 </html>
